@@ -49,6 +49,18 @@ size_t nca_publish_encode_u16(uint8_t *output, size_t capacity,
     return encode_scalar(output, capacity, topic, sequence, value);
 }
 
+size_t nca_publish_encode_u32(uint8_t *output, size_t capacity,
+                              uint8_t topic, uint16_t sequence, uint32_t value)
+{
+    if (output == NULL || capacity < NCA_PUBLISH_U32_PAYLOAD_SIZE ||
+        topic != NCA_TOPIC_ODOMETER) return 0u;
+    output[0] = NCA_INTERACTIVE_VERSION;
+    output[1] = topic;
+    write_u16_le(output + 2u, sequence);
+    write_u32_le(output + 4u, value);
+    return NCA_PUBLISH_U32_PAYLOAD_SIZE;
+}
+
 size_t nca_publish_encode_deci(uint8_t *output, size_t capacity,
                                uint8_t topic, uint16_t sequence, int16_t value_deci)
 {

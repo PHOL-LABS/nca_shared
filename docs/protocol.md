@@ -62,7 +62,17 @@ Version is `1`. Sequence is a wrapping per-topic diagnostic counter.
 | `0x05` | coolant temperature | `int16_t` | value / 10 degrees C |
 | `0x06` | fuel level | `int16_t` | value / 10 |
 | `0x07` | indicators | `uint32_t[2]` | bits 0..63, low word first |
+| `0x08` | odometer | `uint32_t` | kilometres / 10 |
 | `0x20..0x29` | generic 0..9 | `int16_t` | value / 10 |
+
+The Digifiz ESP32 publisher assigns generic topics 0..9 to MFA value, MFA
+clock value, fuel consumption, intake voltage, fuel pressure, uptime hours,
+raw speed, brightness percent, gear, and MFA page respectively.
+Values outside the signed deci-unit range are saturated.
+
+Indicator bits 0..14 are lights, front fog, rear fog, rear-window heat,
+high beam, left turn, right turn, brake, oil pressure, battery, MFA1, MFA2,
+check engine, low fuel, and backlight. Bits 15..23 are reserved.
 
 Indicator bits 24 through 27 are reserved as high-oil-temperature,
 high-outdoor-temperature, high-coolant-temperature, and low-fuel respectively.

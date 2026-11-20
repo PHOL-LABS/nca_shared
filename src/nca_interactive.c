@@ -53,6 +53,10 @@ static uint8_t process_publish(NcaInteractiveState *state,
         if (data_length != 2u) return NCA_TOPIC_NONE;
         state->speed_deci = read_u16_le(data);
         break;
+    case NCA_TOPIC_ODOMETER:
+        if (data_length != 4u) return NCA_TOPIC_NONE;
+        state->odometer_deci_km = read_u32_le(data);
+        break;
     case NCA_TOPIC_OIL_TEMPERATURE:
     case NCA_TOPIC_OUTDOOR_TEMPERATURE:
     case NCA_TOPIC_COOLANT_TEMPERATURE:
@@ -127,6 +131,7 @@ float nca_interactive_assigned_value(const NcaInteractiveState *state)
     switch (state->assigned_topic) {
     case NCA_TOPIC_RPM: return (float)state->rpm;
     case NCA_TOPIC_SPEED: return (float)state->speed_deci / 10.0f;
+    case NCA_TOPIC_ODOMETER: return (float)state->odometer_deci_km / 10.0f;
     case NCA_TOPIC_OIL_TEMPERATURE: return state->oil_temperature;
     case NCA_TOPIC_OUTDOOR_TEMPERATURE: return state->outdoor_temperature;
     case NCA_TOPIC_COOLANT_TEMPERATURE: return state->coolant_temperature;

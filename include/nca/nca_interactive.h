@@ -22,6 +22,7 @@ typedef struct {
     float range_maximum;
     uint16_t rpm;
     uint16_t speed_deci;
+    uint32_t odometer_deci_km;
     float oil_temperature;
     float outdoor_temperature;
     float coolant_temperature;

@@ -26,6 +26,12 @@ TEST_CASE("scalar topic payloads round-trip through interactive processing")
     REQUIRE(nca_interactive_process(&state, NCA_CMD_PUBLISH,
                                     payload.data(), size) == NCA_TOPIC_OUTDOOR_TEMPERATURE);
     REQUIRE(state.outdoor_temperature == Catch::Approx(-12.5f));
+
+    size = nca_publish_encode_u32(payload.data(), payload.size(),
+                                  NCA_TOPIC_ODOMETER, 19, 1234567);
+    REQUIRE(nca_interactive_process(&state, NCA_CMD_PUBLISH,
+                                    payload.data(), size) == NCA_TOPIC_ODOMETER);
+    REQUIRE(state.odometer_deci_km == 1234567);
 }
 
 TEST_CASE("indicator and generic topics are decoded")
